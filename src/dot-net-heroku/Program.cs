@@ -12,6 +12,7 @@ namespace dot_net_heroku
     {
         public static void Main(string[] args)
         {
+/*
             var config = new ConfigurationBuilder().AddCommandLine(args).Build();
             var host = new WebHostBuilder()
                 .UseKestrel()
@@ -20,6 +21,21 @@ namespace dot_net_heroku
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
+*/
+
+            var config = new ConfigurationBuilder()
+                .AddCommandLine(args)
+                .AddEnvironmentVariables(prefix: "ASPNETCORE_")
+                .Build();
+
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseConfiguration(config)
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+
 
             host.Run();
         }
